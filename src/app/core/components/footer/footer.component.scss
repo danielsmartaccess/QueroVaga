@@ -1,0 +1,78 @@
+footer {
+  margin-top: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  transition: background-color 0.3s ease;
+}
+
+h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+h5:after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background-color: var(--secondary-color);
+  bottom: -8px;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+h5:hover:after {
+  width: 100%;
+}
+
+/* Estilos para o logo da Just Go no rodapé */
+h5 img {
+  filter: brightness(0) invert(1); /* Torna o logo branco quando em fundo escuro */
+  transition: transform 0.3s ease;
+}
+
+h5:hover img {
+  transform: scale(1.1);
+}
+
+p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.text-md-end p {
+  margin-bottom: 0;
+}
+
+/* Ícones de redes sociais */
+a.text-white {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+a.text-white:hover {
+  transform: translateY(-3px);
+  opacity: 1;
+}
+
+/* Animação para o ícone */
+i.bi {
+  transition: transform 0.3s ease;
+}
+
+h5:hover i.bi {
+  transform: scale(1.2);
+}
+
+/* Adaptações para mobile */
+@media (max-width: 767px) {
+  .text-md-end {
+    text-align: left !important;
+    margin-top: 1.5rem;
+  }
+}

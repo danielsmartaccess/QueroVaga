@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <div class="page-header">
+    <h2>Importação de Dados</h2>
+    <p class="text-muted">Importe dados de condôminos e vagas a partir de um arquivo Excel</p>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title mb-0">Upload de Arquivo Excel</h4>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <h5>Instruções</h5>
+            <p>O arquivo Excel deve conter as seguintes colunas:</p>
+            <ul>
+              <li><strong>Name</strong> - Nome do condômino</li>
+              <li><strong>Apartment</strong> - Número do apartamento</li>
+              <li><strong>Email</strong> - Email do condômino</li>
+              <li><strong>Parking Space</strong> - Número da vaga de estacionamento</li>
+            </ul>
+          </div>
+          
+          <div *ngIf="message" class="alert" [class.alert-success]="!isError" [class.alert-danger]="isError">
+            {{ message }}
+          </div>
+          
+          <div class="mb-3">
+            <label for="file" class="form-label">Selecione o arquivo Excel</label>
+            <input 
+              type="file" 
+              id="file" 
+              class="form-control" 
+              accept=".xlsx, .xls" 
+              (change)="onFileSelected($event)"
+              [disabled]="loading"
+            >
+          </div>
+          
+          <div *ngIf="progress > 0" class="progress mb-3">
+            <div 
+              class="progress-bar progress-bar-striped progress-bar-animated" 
+              role="progressbar" 
+              [style.width]="progress + '%'" 
+              [attr.aria-valuenow]="progress" 
+              aria-valuemin="0" 
+              aria-valuemax="100">
+              {{ progress }}%
+            </div>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button 
+              class="btn btn-primary" 
+              (click)="uploadFile()" 
+              [disabled]="!selectedFile || loading">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+              Importar Dados
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

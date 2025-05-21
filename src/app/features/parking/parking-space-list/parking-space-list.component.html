@@ -1,0 +1,128 @@
+<div class="container mt-4">
+  <div class="page-header">
+    <h2>Vagas de Estacionamento</h2>
+    <p class="text-muted">Gerencie as vagas de estacionamento do condomínio</p>
+  </div>
+  
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error }}
+    <button type="button" class="btn-close" (click)="error = ''"></button>
+  </div>
+
+  <div *ngIf="loading" class="d-flex justify-content-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!isAdmin">
+    <!-- User view - Shows my spaces and available spaces -->
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="showMySpaces" (click)="showMySpaces = true">
+          Minhas Vagas
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="!showMySpaces" (click)="showMySpaces = false">
+          Vagas Disponíveis
+        </a>
+      </li>
+    </ul>
+
+    <div *ngIf="showMySpaces">
+      <div *ngIf="myParkingSpaces.length === 0" class="alert alert-info">
+        Você não possui vagas registradas.
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="myParkingSpaces.length > 0">
+        <div class="col" *ngFor="let space of myParkingSpaces">
+          <div class="card h-100" [class.border-success]="space.is_available" [class.border-danger]="!space.is_available">
+            <div class="card-header" [class.bg-success]="space.is_available" [class.bg-danger]="!space.is_available" [class.text-white]="true">
+              <h5 class="card-title mb-0">Vaga {{ space.space_number }}</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Status:</strong> 
+                <span *ngIf="space.is_available" class="badge bg-success">Disponível</span>
+                <span *ngIf="!space.is_available" class="badge bg-danger">Ocupada</span>
+              </p>
+              <button class="btn" [class.btn-success]="!space.is_available" [class.btn-danger]="space.is_available" (click)="toggleAvailability(space)">
+                {{ space.is_available ? 'Marcar como Ocupada' : 'Marcar como Disponível' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!showMySpaces">
+      <div *ngIf="availableParkingSpaces.length === 0" class="alert alert-info">
+        Não há vagas disponíveis no momento.
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="availableParkingSpaces.length > 0">
+        <div class="col" *ngFor="let space of availableParkingSpaces">
+          <div class="card h-100 border-success">
+            <div class="card-header bg-success text-white">
+              <h5 class="card-title mb-0">Vaga {{ space.space_number }}</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Status:</strong> 
+                <span class="badge bg-success">Disponível</span>
+              </p>
+              <button class="btn btn-primary" [routerLink]="['/reservations']">
+                Fazer Reserva
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isAdmin">
+    <!-- Admin view - Shows all spaces -->
+    <div class="mb-3">
+      <button class="btn btn-primary" [routerLink]="['/']">
+        Adicionar Nova Vaga
+      </button>
+    </div>
+
+    <div *ngIf="parkingSpaces.length === 0" class="alert alert-info">
+      Não há vagas cadastradas.
+    </div>
+
+    <div class="table-responsive" *ngIf="parkingSpaces.length > 0">
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Número</th>
+            <th>Proprietário</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let space of parkingSpaces">
+            <td>{{ space.space_number }}</td>
+            <td>Proprietário ID: {{ space.owner_id }}</td>
+            <td>
+              <span *ngIf="space.is_available" class="badge bg-success">Disponível</span>
+              <span *ngIf="!space.is_available" class="badge bg-danger">Ocupada</span>
+            </td>
+            <td>
+              <button class="btn btn-sm me-2" [class.btn-success]="!space.is_available" [class.btn-danger]="space.is_available" (click)="toggleAvailability(space)">
+                {{ space.is_available ? 'Marcar como Ocupada' : 'Marcar como Disponível' }}
+              </button>
+              <button class="btn btn-sm btn-warning me-2">
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</div>

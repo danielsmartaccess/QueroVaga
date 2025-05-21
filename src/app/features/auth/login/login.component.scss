@@ -1,0 +1,75 @@
+/* Login page specific styles */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+  padding: 2rem 0;
+}
+
+.login-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.login-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  padding: 1.5rem;
+}
+
+.card-header h2 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25);
+  border-color: #3f51b5;
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(63, 81, 181, 0.3);
+}
+
+.card-footer {
+  background-color: rgba(0, 0, 0, 0.02);
+  font-size: 0.9rem;
+}
+
+.just-go-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px 16px;
+  max-width: 180px;
+}
+
+.just-go-logo {
+  max-width: 100%;
+  height: auto;
+}

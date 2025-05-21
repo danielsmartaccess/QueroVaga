@@ -1,0 +1,60 @@
+<div class="login-container">
+  <div class="container">
+    <div class="row justify-content-center">      <div class="col-md-6">
+        <div class="card login-card">          <div class="card-header bg-primary text-white text-center">            <div class="just-go-logo-container mb-2">
+              <img src="data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAGNbWV0YQAAAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAsaWxvYwAAAABEAAACAAEAAAABAAAB3QAAAy0AAgAAAAEAAAG1AAAAAKAAAAEJpaW5mAAAAAAACAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAAAaaaW5mZQIAAAAAAgAAYXYwMUFscGhhAAAAABppcmVmAAAAAAAAAA5hdXhsAAIAAQQABAAAAw2lwcnAAAACdaXBjbwAAABRpc3BlAAAAAAAAAFAAAABQAAAAEHBpeGkAAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIAAoAAAAAOcGl4aQQAAAAABCAAAAAxhdjFDgQAcAAAAADhhdXhDAAAAAHVybjptcGVnOm1wZWdCOmNpY3A6c3lzdGVtczphdXhpbGlhcnk6YWxwaGEAAAAAHmlwbWEAAAAAAAAAAgABBAAECgwQAAgQBBYYHAAADXW1kYXQSAAoKAAAAAzT55tfJUDIYEACNgDjiQSDDNNK22z7NH3NNFFk3ARsdQEgAKCgAAAAM0+ebXyEIynAYQAIkACCCCCQQS2Yo99R7AOYYZxHgTSH2ZHBcA0k4oUY9zCq+oblshZMwNRLm3Lgb8YCG7xCnI0/HP/1+KO9SsOO6Xu583r2nw0WI//81d5hFutXSm37D3GF0mWrQ128UAAABzhUXoNRlXIuf0BphheDyn/lw6+TjgHf3U1fP8WK+8VOw2JXgg8fgWCmNp+hnh+2pBZLO2WPhg3XCoIl2NqaPAzR/0P8dNpx7M6hEOygChyeEuxh8g5qwUrRzRRgh33pJRcNCV9gidoesUU2eroefZlvheM90aw37yuuIHCeICARJf5VyorFU6gQ1rGa8ErJmIOSSr306+T6WvEvAZxeFIP4W8c23z9fFCt8+aM0LDFiwn37z9Ep3KLhAAAUTYk+nHy9NpeCFnnRMoZHvFw8KMZce8+XQYdGjdITjoIpzqU3y8J0UzjwIiyEyelKyWR/hahLwrrpRfgiQaJoLM2n7DqbtkgV2f23kVeRgl/8TE+r2Qyc67/+yZ0woLdPX1+xUs61dB3bmULroOCfmSIhwomYLU6yTFaIVRbacQsGbQNTm/l8UTCqJwcSphgcXZ39wAwWdzzPu+G/xAgBr49dRkF2OBdeAROoSAuLq1mWnZkM/P7whbYFiOZ5Qnx7eYhDEhfz1ZPqRd2FsdtGZQazvsNziEHh/jy/RbPpiu+bEogcDpVqUbHmjmUIautR5an2gJfCdNZsoFK1RNdbLfmtj59bs1u4tgwBhf8G7/lEZ8qJIUiRLw9XSsw/GBq8KgRTjSU6Pwjv5XV2TQT6RfIsiOsQMmHUpNeIZi+i2US30zGy1VvakQebZikAO1fgAA8w2012dMhg9WtmNfEJAyFl6WpyhWImjGcXYzEW3MjfqqX/89ovRnAUUon2L0iIVDmTAfX45dI4LBXCybSLpl5pVprCJyqDk5E0+54UdNb5en3GJQF8Zll+ZwWH8VWCneIouRrk+5bm7KK2gvgHZRTtCSIN7f5ZQNyrBPiIAYXMSpo8gpmD+e/92Fupp39PSBrclqy6/hO3SeQoHL6qvBRYNfHTEP5KkzCioOvWo0w" alt="Just Go Logo" height="42" class="just-go-logo">
+            </div>
+            <p class="mb-0">Sistema de gerenciamento de vagas de estacionamento</p>
+          </div>
+          <div class="card-body p-4">
+            <h3 class="text-center mb-4">Login</h3>
+            
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="username" class="form-label">Email</label>
+                <input
+                  type="email"
+                  formControlName="username"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+                  placeholder="Seu email"
+                />
+                <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
+                  <div *ngIf="f['username'].errors['required']">Email é obrigatório</div>
+                  <div *ngIf="f['username'].errors['email']">Insira um email válido</div>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label for="password" class="form-label">Senha</label>
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                  placeholder="Sua senha"
+                />
+                <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                  <div *ngIf="f['password'].errors['required']">Senha é obrigatória</div>
+                </div>
+              </div>
+                <div class="d-grid">
+                <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                  Entrar
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center text-muted py-3">
+            © {{ currentYear }} QueroVaga. Todos os direitos reservados.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

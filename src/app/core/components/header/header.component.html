@@ -1,0 +1,57 @@
+<!-- Temporary header file, will be used to replace the existing one -->
+<nav class="navbar navbar-expand-lg" [ngClass]="(themeService.darkTheme$ | async) ? 'navbar-dark bg-dark' : 'navbar-dark bg-primary'">  <div class="container">    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAAGNbWV0YQAAAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAsaWxvYwAAAABEAAACAAEAAAABAAAB3QAAAy0AAgAAAAEAAAG1AAAAAKAAAAEJpaW5mAAAAAAACAAAAGmluZmUCAAAAAAEAAGF2MDFDb2xvcgAAAAAaaaW5mZQIAAAAAAgAAYXYwMUFscGhhAAAAABppcmVmAAAAAAAAAA5hdXhsAAIAAQQABAAAAw2lwcnAAAACdaXBjbwAAABRpc3BlAAAAAAAAAFAAAABQAAAAEHBpeGkAAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIAAoAAAAAOcGl4aQQAAAAABCAAAAAxhdjFDgQAcAAAAADhhdXhDAAAAAHVybjptcGVnOm1wZWdCOmNpY3A6c3lzdGVtczphdXhpbGlhcnk6YWxwaGEAAAAAHmlwbWEAAAAAAAAAAgABBAAECgwQAAgQBBYYHAAADXW1kYXQSAAoKAAAAAzT55tfJUDIYEACNgDjiQSDDNNK22z7NH3NNFFk3ARsdQEgAKCgAAAAM0+ebXyEIynAYQAIkACCCCCQQS2Yo99R7AOYYZxHgTSH2ZHBcA0k4oUY9zCq+oblshZMwNRLm3Lgb8YCG7xCnI0/HP/1+KO9SsOO6Xu583r2nw0WI//81d5hFutXSm37D3GF0mWrQ128UAAABzhUXoNRlXIuf0BphheDyn/lw6+TjgHf3U1fP8WK+8VOw2JXgg8fgWCmNp+hnh+2pBZLO2WPhg3XCoIl2NqaPAzR/0P8dNpx7M6hEOygChyeEuxh8g5qwUrRzRRgh33pJRcNCV9gidoesUU2eroefZlvheM90aw37yuuIHCeICARJf5VyorFU6gQ1rGa8ErJmIOSSr306+T6WvEvAZxeFIP4W8c23z9fFCt8+aM0LDFiwn37z9Ep3KLhAAAUTYk+nHy9NpeCFnnRMoZHvFw8KMZce8+XQYdGjdITjoIpzqU3y8J0UzjwIiyEyelKyWR/hahLwrrpRfgiQaJoLM2n7DqbtkgV2f23kVeRgl/8TE+r2Qyc67/+yZ0woLdPX1+xUs61dB3bmULroOCfmSIhwomYLU6yTFaIVRbacQsGbQNTm/l8UTCqJwcSphgcXZ39wAwWdzzPu+G/xAgBr49dRkF2OBdeAROoSAuLq1mWnZkM/P7whbYFiOZ5Qnx7eYhDEhfz1ZPqRd2FsdtGZQazvsNziEHh/jy/RbPpiu+bEogcDpVqUbHmjmUIautR5an2gJfCdNZsoFK1RNdbLfmtj59bs1u4tgwBhf8G7/lEZ8qJIUiRLw9XSsw/GBq8KgRTjSU6Pwjv5XV2TQT6RfIsiOsQMmHUpNeIZi+i2US30zGy1VvakQebZikAO1fgAA8w2012dMhg9WtmNfEJAyFl6WpyhWImjGcXYzEW3MjfqqX/89ovRnAUUon2L0iIVDmTAfX45dI4LBXCybSLpl5pVprCJyqDk5E0+54UdNb5en3GJQF8Zll+ZwWH8VWCneIouRrk+5bm7KK2gvgHZRTtCSIN7f5ZQNyrBPiIAYXMSpo8gpmD+e/92Fupp39PSBrclqy6/hO3SeQoHL6qvBRYNfHTEP5KkzCioOvWo0w" alt="Just Go Logo" height="36" class="me-2">
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a class="nav-link" routerLink="/parking-spaces" routerLinkActive="active">
+            <i class="bi bi-car-front-fill me-1"></i> Vagas
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a class="nav-link" routerLink="/reservations" routerLinkActive="active">
+            <i class="bi bi-calendar-check me-1"></i> Reservas
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn() && authService.currentUserValue?.is_admin">
+          <a class="nav-link" routerLink="/residents" routerLinkActive="active">
+            <i class="bi bi-people-fill me-1"></i> Condôminos
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn() && authService.currentUserValue?.is_admin">
+          <a class="nav-link" routerLink="/admin/import" routerLinkActive="active">
+            <i class="bi bi-file-earmark-excel me-1"></i> Importar Dados
+          </a>
+        </li>
+      </ul>
+      
+      <div class="d-flex align-items-center" *ngIf="authService.isLoggedIn()">
+        <button class="btn btn-icon me-2" (click)="toggleTheme()" aria-label="Alternar tema">
+          <i class="bi" [ngClass]="(themeService.darkTheme$ | async) ? 'bi-sun' : 'bi-moon'"></i>
+        </button>
+        
+        <span class="text-light me-3">
+          <i class="bi bi-person-circle me-1"></i>
+          Olá, {{ authService.currentUserValue?.name || 'Usuário' }}
+        </span>
+        
+        <button class="btn btn-outline-light" (click)="logout()">
+          <i class="bi bi-box-arrow-right me-1"></i>
+          Sair
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

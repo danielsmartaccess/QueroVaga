@@ -1,0 +1,24 @@
+<!-- 
+  Rodapé da aplicação
+  Exibe informações sobre a aplicação e copyright
+-->
+<footer [ngClass]="(themeService.darkTheme$ | async) ? 'bg-dark' : 'bg-primary'" class="text-white py-4 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">        <h5 class="d-flex align-items-center">
+          <img src="assets/images/just-go-logo.svg" alt="Just Go Logo" height="28" class="me-2">
+          <span>QueroVaga</span>
+        </h5>
+        <p>Sistema de gerenciamento de vagas de estacionamento para condomínios.</p>
+      </div>
+      <div class="col-md-6 text-md-end d-flex flex-column justify-content-between">
+        <div class="mb-3">
+          <a href="#" class="text-white me-3"><i class="bi bi-github"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+        <p class="mb-0">© {{ currentYear }} Just Go. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </div>
+</footer>
