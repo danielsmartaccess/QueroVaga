@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/reservations/reservation-form/reservation-form.component.scss"],
+  "sourcesContent": ["// Estilos específicos para o formulário de reserva\n.card {\n  border-radius: 8px;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}\n\n.card-header {\n  border-radius: 8px 8px 0 0;\n}\n\n// Estilos para feedback visual nos campos do formulário\n.form-control, .form-select {\n  &.ng-invalid.ng-touched {\n    border-color: #dc3545;\n  }\n  \n  &.ng-valid.ng-touched {\n    border-color: #198754;\n  }\n}\n\n// Estilos para as seções do formulário\nh6 {\n  color: #495057;\n  font-weight: 600;\n  padding-bottom: 0.5rem;\n  border-bottom: 1px solid #e9ecef;\n}\n"],
+  "mappings": "AACA,CAAA,KAAA,cACE,IACA,WAAA,EAAA,IAAA,IAAA,UAGF,CAAA,YALA,cAME,IAAA,IAAA,EAAA,EAKA,CAAA,YAAA,CAAA,UAAA,CAAA,WAAA,CAAA,WAAA,CAAA,UAAA,CAAA,WACE,aAAA,QAGF,CAJA,YAIA,CAAA,QAAA,CAJA,WAIA,CAJA,WAIA,CAAA,QAAA,CAJA,WAKE,aAAA,QAKJ,GACE,MAAA,QACA,YAAA,IACA,eAAA,MACA,cAAA,IAAA,MAAA",
+  "names": []
+}
