@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecionando...</title>
+  <script type="text/javascript">
+    // Arquivo para resolver o problema de rotas do GitHub Pages com Single Page Applications
+    // Inspirado em https://github.com/rafgraph/spa-github-pages
+    
+    var pathSegmentsToKeep = 1; // Número de segmentos para manter (1 para /QueroVaga/)
+
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+      l.hash
+    );
+  </script>
+</head>
+<body>
+  <h1>Redirecionando...</h1>
+  <p>Se você não for redirecionado automaticamente, <a href="/QueroVaga/">clique aqui</a>.</p>
+</body>
+</html>

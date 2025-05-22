@@ -6,12 +6,19 @@
   <app-header *ngIf="authService.isLoggedIn()"></app-header>
   
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Vaga Livre</a>
+    <a class="navbar-brand" href="#">
+      <img src="./assets/images/go.avif" alt="Vaga Livre" width="30" height="30" class="d-inline-block align-top me-2">
+      Vaga Livre
+    </a>
     <!-- ... other navbar content ... -->
   </nav>
 
   <div class="content-wrapper">
     <div class="content container">
+      <!-- Logo JustGo no topo da página inicial - exibido apenas quando não estiver logado -->
+      <div *ngIf="!authService.isLoggedIn()" class="text-center my-4">
+        <img src="./assets/images/justgo-logo.jpg" alt="JustGo Logo" class="img-fluid justgo-logo">
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>

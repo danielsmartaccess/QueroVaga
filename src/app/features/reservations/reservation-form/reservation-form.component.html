@@ -1,0 +1,91 @@
+<div class="card">
+  <div class="card-header bg-light">
+    <h5 class="mb-0">{{ reservation ? 'Editar Reserva' : 'Nova Reserva' }}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Alert para erros -->
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ errorMessage }}
+        <button type="button" class="btn-close" aria-label="Fechar" (click)="errorMessage = ''"></button>
+      </div>
+
+      <!-- Vaga de Estacionamento -->
+      <div class="mb-3">
+        <label for="parkingSpace" class="form-label">Vaga de Estacionamento*</label>
+        <select id="parkingSpace" class="form-select" formControlName="parking_space_id">
+          <option value="" disabled>Selecione uma vaga</option>
+          <option *ngFor="let space of availableParkingSpaces" [value]="space.id">
+            {{ space.number }} (Bloco {{ space.block }}, {{ space.type }})
+          </option>
+        </select>
+        <div *ngIf="reservationForm.get('parking_space_id')?.invalid && reservationForm.get('parking_space_id')?.touched" class="text-danger mt-1">
+          Por favor, selecione uma vaga.
+        </div>
+      </div>
+
+      <!-- Dados do Convidado -->
+      <h6 class="mt-4 mb-3">Dados do Visitante</h6>
+      
+      <div class="mb-3">
+        <label for="guestName" class="form-label">Nome do Visitante*</label>
+        <input type="text" id="guestName" class="form-control" formControlName="guest_name" placeholder="Nome completo">
+        <div *ngIf="reservationForm.get('guest_name')?.invalid && reservationForm.get('guest_name')?.touched" class="text-danger mt-1">
+          Por favor, informe o nome do visitante.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="guestVehicle" class="form-label">Placa do Veículo*</label>
+        <input type="text" id="guestVehicle" class="form-control" formControlName="guest_vehicle" placeholder="ABC1234">
+        <div *ngIf="reservationForm.get('guest_vehicle')?.invalid && reservationForm.get('guest_vehicle')?.touched" class="text-danger mt-1">
+          Por favor, informe a placa do veículo.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="guestPhone" class="form-label">Telefone do Visitante*</label>
+        <input type="tel" id="guestPhone" class="form-control" formControlName="guest_phone" placeholder="11999999999">
+        <div *ngIf="reservationForm.get('guest_phone')?.invalid && reservationForm.get('guest_phone')?.touched" class="text-danger mt-1">
+          <span *ngIf="reservationForm.get('guest_phone')?.errors?.['required']">Por favor, informe o telefone do visitante.</span>
+          <span *ngIf="reservationForm.get('guest_phone')?.errors?.['pattern']">Formato inválido. Use apenas números (10 ou 11 dígitos).</span>
+        </div>
+      </div>
+
+      <!-- Dados do Condômino -->
+      <h6 class="mt-4 mb-3">Dados do Condômino</h6>
+      
+      <div class="mb-3">
+        <label for="apartmentNumber" class="form-label">Apartamento</label>
+        <input type="text" id="apartmentNumber" class="form-control" formControlName="apartment_number" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label for="residentPhone" class="form-label">Telefone do Condômino</label>
+        <input type="tel" id="residentPhone" class="form-control" formControlName="resident_phone" placeholder="11999999999">
+        <div *ngIf="reservationForm.get('resident_phone')?.invalid && reservationForm.get('resident_phone')?.touched" class="text-danger mt-1">
+          <span *ngIf="reservationForm.get('resident_phone')?.errors?.['pattern']">Formato inválido. Use apenas números (10 ou 11 dígitos).</span>
+        </div>
+      </div>
+
+      <!-- Data da Reserva -->
+      <div class="mb-3">
+        <label for="reservationDate" class="form-label">Data da Reserva*</label>
+        <input type="date" id="reservationDate" class="form-control" formControlName="reservation_date">
+        <div *ngIf="reservationForm.get('reservation_date')?.invalid && reservationForm.get('reservation_date')?.touched" class="text-danger mt-1">
+          Por favor, informe a data da reserva.
+        </div>
+      </div>
+
+      <!-- Botões de ação -->
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSubmitting">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          {{ reservation ? 'Atualizar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

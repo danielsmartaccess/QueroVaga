@@ -43,9 +43,19 @@ router-outlet + * {
   }
 }
 
+/* Estilo para o logo JustGo */
+.justgo-logo {
+  max-width: 300px;
+  margin: 20px auto;
+}
+
 /* Adaptações para dispositivos móveis */
 @media (max-width: 768px) {
   .content {
     padding: 15px;
+  }
+  
+  .justgo-logo {
+    max-width: 200px;
   }
 }

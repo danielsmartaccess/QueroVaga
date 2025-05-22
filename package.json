@@ -8,7 +8,7 @@
     "build:github": "ng build --base-href=/QueroVaga/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:github": "ng build --base-href=/QueroVaga/ && npx angular-cli-ghpages --dir=dist/frontend"
+    "deploy:github": "ng build --base-href=/QueroVaga/ && npx angular-cli-ghpages --dir=dist/frontend/browser"
   },
   "private": true,
   "dependencies": {

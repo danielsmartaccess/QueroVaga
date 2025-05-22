@@ -4,6 +4,7 @@ export interface Resident {
   apartment: string;
   email: string;
   is_admin?: boolean;
+  phone?: string; // Número de telefone do morador
 }
 
 export interface ResidentCreate extends Resident {

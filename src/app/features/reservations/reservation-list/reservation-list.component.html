@@ -4,6 +4,7 @@
     <p class="text-muted">Gerencie suas reservas de vagas de estacionamento</p>
   </div>
   
+  <!-- Botões de ação -->
   <div class="row mb-4">
     <div class="col-md-6">
       <a class="btn btn-primary" routerLink="/parking-spaces">
@@ -11,18 +12,147 @@
       </a>
     </div>
     <div class="col-md-6 text-end">
-      <button class="btn btn-success">
+      <button class="btn btn-success" (click)="showAddForm()" *ngIf="!showForm">
         <i class="bi bi-plus-circle"></i> Nova Reserva
       </button>
     </div>
   </div>
+
+  <!-- Mensagem de erro -->
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ error }}
+    <button type="button" class="btn-close" aria-label="Fechar" (click)="error = ''"></button>
+  </div>
   
-  <div class="card">
+  <!-- Formulário de Reserva -->
+  <div *ngIf="showForm">
+    <app-reservation-form
+      [reservation]="selectedReservation"
+      (saved)="onFormSaved()"
+      (cancelled)="onFormCancelled()"
+    ></app-reservation-form>
+  </div>
+  
+  <!-- Lista de Reservas -->
+  <div class="card" *ngIf="!showForm">
     <div class="card-header bg-light">
-      <h5 class="mb-0">Minhas Reservas</h5>
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h5 class="mb-0">{{ isAdmin ? 'Todas as Reservas' : 'Minhas Reservas' }}</h5>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Buscar por nome, placa, vaga..." 
+              [(ngModel)]="searchTerm"
+            >
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-label="Filtrar por status">
+              <span *ngIf="filterStatus === 'all'">Todos</span>
+              <span *ngIf="filterStatus === 'active'">Ativas</span>
+              <span *ngIf="filterStatus === 'inactive'">Concluídas</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" (click)="filterStatus = 'all'">Todos</a></li>
+              <li><a class="dropdown-item" (click)="filterStatus = 'active'">Ativas</a></li>
+              <li><a class="dropdown-item" (click)="filterStatus = 'inactive'">Concluídas</a></li>
+            </ul>
+            <button class="btn btn-outline-secondary" type="button" (click)="clearFilters()" *ngIf="searchTerm || filterStatus !== 'all'" aria-label="Limpar filtros">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+    
     <div class="card-body">
-      <p>Funcionalidade em desenvolvimento. Em breve você poderá gerenciar suas reservas aqui.</p>
+      <!-- Loading indicator -->
+      <div *ngIf="loading" class="text-center p-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-2">Carregando reservas...</p>
+      </div>
+      
+      <!-- Tabela de reservas -->
+      <div *ngIf="!loading && filterReservations().length > 0" class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>Vaga</th>
+              <th>Visitante</th>
+              <th>Placa</th>
+              <th>Telefone</th>
+              <th>Data</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reservation of filterReservations()">
+              <td>{{ reservation.parking_space_number }}</td>
+              <td>{{ reservation.guest_name }}</td>
+              <td>{{ reservation.guest_vehicle }}</td>
+              <td>{{ reservation.guest_phone || 'N/A' }}</td>
+              <td>{{ reservation.date }}</td>
+              <td>
+                <span 
+                  class="badge" 
+                  [ngClass]="{
+                    'bg-success': reservation.is_active && !reservation.check_out_time,
+                    'bg-warning': reservation.is_active && reservation.check_in_time && !reservation.check_out_time,
+                    'bg-secondary': !reservation.is_active || reservation.check_out_time
+                  }">
+                  {{ reservation.status }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-primary" (click)="editReservation(reservation)" title="Editar">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button 
+                    *ngIf="reservation.is_active && !reservation.check_in_time" 
+                    class="btn btn-sm btn-outline-success" 
+                    (click)="checkInReservation(reservation.id!)" 
+                    title="Registrar Entrada">
+                    <i class="bi bi-box-arrow-in-down"></i>
+                  </button>
+                  <button 
+                    *ngIf="reservation.is_active && reservation.check_in_time && !reservation.check_out_time" 
+                    class="btn btn-sm btn-outline-info" 
+                    (click)="checkOutReservation(reservation.id!)" 
+                    title="Registrar Saída">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteReservation(reservation.id!)" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mensagem de nenhuma reserva -->
+      <div *ngIf="!loading && reservations.length === 0" class="text-center p-5">
+        <i class="bi bi-calendar-x display-1 text-muted"></i>
+        <p class="mt-3">Nenhuma reserva encontrada.</p>
+        <button class="btn btn-primary mt-2" (click)="showAddForm()">
+          <i class="bi bi-plus-circle"></i> Criar Nova Reserva
+        </button>
+      </div>
+      
+      <!-- Mensagem de nenhum resultado de busca -->
+      <div *ngIf="!loading && reservations.length > 0 && filterReservations().length === 0" class="text-center p-5">
+        <i class="bi bi-search display-1 text-muted"></i>
+        <p class="mt-3">Nenhuma reserva encontrada com os filtros atuais.</p>
+        <button class="btn btn-secondary mt-2" (click)="clearFilters()">
+          <i class="bi bi-x-circle"></i> Limpar Filtros
+        </button>
+      </div>
     </div>
   </div>
 </div>

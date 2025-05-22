@@ -1,0 +1,28 @@
+// Estilos específicos para o formulário de reserva
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-radius: 8px 8px 0 0;
+}
+
+// Estilos para feedback visual nos campos do formulário
+.form-control, .form-select {
+  &.ng-invalid.ng-touched {
+    border-color: #dc3545;
+  }
+  
+  &.ng-valid.ng-touched {
+    border-color: #198754;
+  }
+}
+
+// Estilos para as seções do formulário
+h6 {
+  color: #495057;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}

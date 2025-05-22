@@ -32,6 +32,8 @@ export class ReservationService {
       parking_space_number: 'A01', 
       guest_name: 'Visitante Silva', 
       guest_vehicle: 'Ford Ka - XYZ-1234', 
+      guest_phone: '11988887777',
+      resident_phone: '11999998888',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(), 
       is_active: true, 
@@ -44,6 +46,8 @@ export class ReservationService {
       parking_space_number: 'A03', 
       guest_name: 'Visitante Oliveira', 
       guest_vehicle: 'Honda Civic - ABC-5678', 
+      guest_phone: '11977776666',
+      resident_phone: '11955554444',
       reservation_date: this.getRandomPastDate(), 
       date: this.getRandomPastDate(),
       check_in_time: '10:30',
@@ -58,6 +62,8 @@ export class ReservationService {
       parking_space_number: 'A05', 
       guest_name: 'Visitante Ferreira', 
       guest_vehicle: 'Toyota Corolla - DEF-9012', 
+      guest_phone: '11966665555',
+      resident_phone: '11933332222',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(), 
       is_active: true, 
@@ -70,6 +76,8 @@ export class ReservationService {
       parking_space_number: 'A07', 
       guest_name: 'Visitante Costa', 
       guest_vehicle: 'Fiat Uno - GHI-3456', 
+      guest_phone: '11944443333',
+      resident_phone: '11922221111',
       reservation_date: this.getRandomPastDate(), 
       date: this.getRandomPastDate(),
       check_in_time: '09:15',
@@ -84,6 +92,8 @@ export class ReservationService {
       parking_space_number: 'B01', 
       guest_name: 'Visitante Santos', 
       guest_vehicle: 'Chevrolet Onix - JKL-7890', 
+      guest_phone: '11933331111',
+      resident_phone: '11922223333',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(),
       is_active: true, 
@@ -96,6 +106,8 @@ export class ReservationService {
       parking_space_number: 'B03', 
       guest_name: 'Visitante Martins', 
       guest_vehicle: 'Hyundai HB20 - MNO-1234', 
+      guest_phone: '11922224444',
+      resident_phone: '11911115555',
       reservation_date: this.getRandomPastDate(), 
       date: this.getRandomPastDate(),
       check_in_time: '14:00',
@@ -110,6 +122,8 @@ export class ReservationService {
       parking_space_number: 'B05', 
       guest_name: 'Visitante Rocha', 
       guest_vehicle: 'Volkswagen Gol - PQR-5678', 
+      guest_phone: '11911116666',
+      resident_phone: '11900007777',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(), 
       is_active: true, 
@@ -122,6 +136,8 @@ export class ReservationService {
       parking_space_number: 'B07', 
       guest_name: 'Visitante Ribeiro', 
       guest_vehicle: 'Nissan Versa - STU-9012', 
+      guest_phone: '11900008888',
+      resident_phone: '11988887777',
       reservation_date: this.getRandomPastDate(), 
       date: this.getRandomPastDate(),
       check_in_time: '11:45',
@@ -136,6 +152,8 @@ export class ReservationService {
       parking_space_number: 'C01', 
       guest_name: 'Visitante Almeida', 
       guest_vehicle: 'Renault Kwid - VWX-3456', 
+      guest_phone: '11977778888',
+      resident_phone: '11966669999',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(), 
       is_active: true, 
@@ -148,6 +166,8 @@ export class ReservationService {
       parking_space_number: 'C03', 
       guest_name: 'Visitante Lima', 
       guest_vehicle: 'Jeep Renegade - YZA-7890', 
+      guest_phone: '11955559999',
+      resident_phone: '11944440000',
       reservation_date: this.getRandomPastDate(), 
       date: this.getRandomPastDate(),
       check_in_time: '10:00',
@@ -162,6 +182,8 @@ export class ReservationService {
       parking_space_number: 'C05', 
       guest_name: 'Visitante Souza', 
       guest_vehicle: 'Mitsubishi L200 - BCD-1234', 
+      guest_phone: '11933339999',
+      resident_phone: '11922220000',
       reservation_date: this.getRandomFutureDate(), 
       date: this.getRandomFutureDate(), 
       is_active: true, 
@@ -277,7 +299,8 @@ export class ReservationService {
     return this.http.put<Reservation>(`${this.apiUrl}/${id}/check-out`, {});
   }
 
-  cancelReservation(id: number): Observable<void> {
+  // Método para exclusão da reserva
+  deleteReservation(id: number): Observable<void> {
     if (this.useMockData) {
       const index = this.mockReservations.findIndex(r => r.id === id);
       if (index !== -1) {
@@ -286,5 +309,10 @@ export class ReservationService {
       return of(void 0);
     }
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  
+  // Mantido por compatibilidade - redireciona para deleteReservation
+  cancelReservation(id: number): Observable<void> {
+    return this.deleteReservation(id);
   }
 }

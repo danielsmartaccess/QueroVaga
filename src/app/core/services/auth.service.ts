@@ -26,7 +26,7 @@ export class AuthService {
   // Usuários de teste para facilitar o desenvolvimento
   private testUsers = [
     { username: 'admin@example.com', password: 'admin123', user: { id: 1, name: 'Administrador', apartment: 'A101', email: 'admin@example.com', is_admin: true } },
-    { username: 'usuario@example.com', password: 'senha123', user: { id: 2, name: 'Usuário Comum', apartment: 'B202', email: 'usuario@example.com', is_admin: false } }
+    { username: 'dani@querovaga.com', password: 'dani1234', user: { id: 2, name: 'Usuário Comum', apartment: 'B202', email: 'dani@querovaga.com', is_admin: false } }
   ];
 
   constructor(private http: HttpClient) {
